@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 if(DEFINED DEPENDENCIES_DIR)
 	include(${DEPENDENCIES_DIR}/modorganizer_super/cmake_common/src.cmake)
 else()
-	include(../../cmake_common/src.cmake)
+	include(${CMAKE_SOURCE_DIR}/../cmake_common/src.cmake)
 endif()
 add_filter(NAME src/interfaces GROUPS
 	ifiletree

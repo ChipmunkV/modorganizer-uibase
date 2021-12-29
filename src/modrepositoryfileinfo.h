@@ -23,6 +23,8 @@ namespace MOBase {
     ModRepositoryFileInfo(QString gameName = "", int modID = 0, int fileID = 0);
     QString toString() const;
 
+    ModRepositoryFileInfo& operator=(const ModRepositoryFileInfo &reference);
+
     static ModRepositoryFileInfo createFromJson(const QString &data);
     QString name;
     QString uri;

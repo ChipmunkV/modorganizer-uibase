@@ -4,6 +4,8 @@
 #include "dllimport.h"
 #include <QAbstractItemView>
 
+QT_FORWARD_DECLARE_CLASS(QTreeView)
+
 namespace MOBase
 {
 

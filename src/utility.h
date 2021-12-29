@@ -30,11 +30,18 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <QIcon>
 #include <QUrl>
 #include <QVariant>
-#include <Windows.h>
-#include <ShlObj.h>
+//#include <Windows.h>
+//#include <ShlObj.h>
 
 #include "dllimport.h"
 #include "exceptions.h"
+
+using HANDLE = void*;
+#define INVALID_HANDLE_VALUE 0
+using DWORD = uint32_t;
+using HRESULT = int32_t;
+#define NTSTATUS uint32_t
+using LPDWORD = uint32_t*;
 
 
 namespace MOBase {
@@ -160,9 +167,10 @@ namespace shell
 
       void operator()(HANDLE h)
       {
-        if (h != INVALID_HANDLE_VALUE) {
-          ::CloseHandle(h);
-        }
+//        if (h != INVALID_HANDLE_VALUE) {
+//          ::CloseHandle(h);
+//        }
+        assert(false && "Not implemented");
       }
     };
 
@@ -373,8 +381,7 @@ QDLLEXPORT QString ToQString(const std::wstring &source);
  * @param time the time to convert
  * @return string representation of the time object
  **/
-QDLLEXPORT QString ToString(const SYSTEMTIME &time);
-
+//QDLLEXPORT QString ToString(const SYSTEMTIME &time);^M
 
 // three-way compare for natural sorting (case insensitive default, 10 comes
 // after 2)
@@ -409,12 +416,11 @@ private:
  * @param what  the name of the folder, used for logging errors only
  * @return absolute path of the given known folder id
  **/
-QDLLEXPORT QDir getKnownFolder(KNOWNFOLDERID id, const QString& what={});
+//QDLLEXPORT QDir getKnownFolder(KNOWNFOLDERID id, const QString& what={});
 
 // same as above, does not log failure
 //
-QDLLEXPORT QString getOptionalKnownFolder(KNOWNFOLDERID id);
-
+//QDLLEXPORT QString getOptionalKnownFolder(KNOWNFOLDERID id);
 /**
  * throws on failure
  * @return absolute path of the desktop directory for the current user
@@ -587,68 +593,69 @@ private:
 template <class F>
 bool forEachLineInFile(const QString& filePath, F&& f)
 {
-  HANDLE h = ::CreateFileW(
-    reinterpret_cast<const wchar_t*>(filePath.utf16()), GENERIC_READ,
-    FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+//  HANDLE h = ::CreateFileW(
+//    reinterpret_cast<const wchar_t*>(filePath.utf16()), GENERIC_READ,
+//    FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+//
+//  if (h == INVALID_HANDLE_VALUE) {
+//    return false;
+//  }
+//
+//  MOBase::Guard g([&]{ ::CloseHandle(h); });
+//
+//  LARGE_INTEGER fileSize;
+//  if (!GetFileSizeEx(h, &fileSize)) {
+//    return false;
+//  }
+//
+//  auto buffer = std::make_unique<char[]>(fileSize.QuadPart);
+//  DWORD byteCount = static_cast<DWORD>(fileSize.QuadPart);
+//  if (!::ReadFile(h, buffer.get(), byteCount, &byteCount, nullptr)) {
+//    return false;
+//  }
+//
+//  const char* lineStart = buffer.get();
+//  const char* p = lineStart;
+//  const char* end = buffer.get() + byteCount;
+//
+//  while (p < end) {
+//    // skip all newline characters
+//    while ((p < end) && (*p == '\n' || *p == '\r')) {
+//      ++p;
+//    }
+//
+//    // line starts here
+//    lineStart = p;
+//
+//    // find end of line
+//    while ((p < end) && *p != '\n' && *p != '\r') {
+//      ++p;
+//    }
+//
+//    if (p != lineStart) {
+//      // skip whitespace at beginning of line, don't go past end of line
+//      while (std::isspace(*lineStart) && lineStart < p) {
+//        ++lineStart;
+//      }
+//
+//      // skip comments
+//      if (*lineStart != '#') {
+//        // skip line if it only had whitespace
+//        if (lineStart < p) {
+//          // skip white at end of line
+//          const char* lineEnd = p - 1;
+//          while (std::isspace(*lineEnd) && lineEnd > lineStart) {
+//            --lineEnd;
+//          }
+//          ++lineEnd;
+//
+//          f(QString::fromUtf8(lineStart, lineEnd - lineStart));
+//        }
+//      }
+//    }
+//  }
 
-  if (h == INVALID_HANDLE_VALUE) {
-    return false;
-  }
-
-  MOBase::Guard g([&]{ ::CloseHandle(h); });
-
-  LARGE_INTEGER fileSize;
-  if (!GetFileSizeEx(h, &fileSize)) {
-    return false;
-  }
-
-  auto buffer = std::make_unique<char[]>(fileSize.QuadPart);
-  DWORD byteCount = static_cast<DWORD>(fileSize.QuadPart);
-  if (!::ReadFile(h, buffer.get(), byteCount, &byteCount, nullptr)) {
-    return false;
-  }
-
-  const char* lineStart = buffer.get();
-  const char* p = lineStart;
-  const char* end = buffer.get() + byteCount;
-
-  while (p < end) {
-    // skip all newline characters
-    while ((p < end) && (*p == '\n' || *p == '\r')) {
-      ++p;
-    }
-
-    // line starts here
-    lineStart = p;
-
-    // find end of line
-    while ((p < end) && *p != '\n' && *p != '\r') {
-      ++p;
-    }
-
-    if (p != lineStart) {
-      // skip whitespace at beginning of line, don't go past end of line
-      while (std::isspace(*lineStart) && lineStart < p) {
-        ++lineStart;
-      }
-
-      // skip comments
-      if (*lineStart != '#') {
-        // skip line if it only had whitespace
-        if (lineStart < p) {
-          // skip white at end of line
-          const char* lineEnd = p - 1;
-          while (std::isspace(*lineEnd) && lineEnd > lineStart) {
-            --lineEnd;
-          }
-          ++lineEnd;
-
-          f(QString::fromUtf8(lineStart, lineEnd - lineStart));
-        }
-      }
-    }
-  }
-
+  assert(false && "Not implemented");
   return true;
 }
 

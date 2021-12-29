@@ -103,14 +103,15 @@ void TutorialControl::expose(const QString &widgetName, QObject *widget)
 static QString canonicalPath(const QString &path)
 {
   std::unique_ptr<wchar_t[]> buffer(new wchar_t[32768]);
-  DWORD res = ::GetShortPathNameW((wchar_t*)path.utf16(), buffer.get(), 32768);
-  if (res == 0) {
-    return path;
-  }
-  res = ::GetLongPathNameW(buffer.get(), buffer.get(), 32768);
-  if (res == 0) {
-    return path;
-  }
+//  DWORD res = ::GetShortPathNameW((wchar_t*)path.utf16(), buffer.get(), 32768);
+//  if (res == 0) {
+//    return path;
+//  }
+//  res = ::GetLongPathNameW(buffer.get(), buffer.get(), 32768);
+//  if (res == 0) {
+//    return path;
+//  }
+  assert(false && "Not implemented");
   return QString::fromWCharArray(buffer.get());
 }
 

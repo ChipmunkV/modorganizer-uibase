@@ -26,13 +26,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <QStringList>
 #include <QVariant>
 #include <QMainWindow>
-#include <Windows.h>
+//#include <Windows.h>
 #include <functional>
 
 #include "guessedvalue.h"
 #include "imodlist.h"
 #include "iprofile.h"
 #include "versioninfo.h"
+
+using HANDLE = void*;
+using LPDWORD = uint32_t*;
 
 namespace MOBase {
 

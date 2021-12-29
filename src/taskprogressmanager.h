@@ -6,9 +6,12 @@
 #include <QTimer>
 #include <QTime>
 #include <map>
-#include <Windows.h>
-#include <shobjidl.h>
+//#include <Windows.h>
+//#include <shobjidl.h>
 #include "dllimport.h"
+
+using HWND = void*;
+using ITaskbarList3 = void;
 
 namespace MOBase {
 

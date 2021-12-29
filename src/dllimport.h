@@ -25,6 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 namespace MOBase {
 
+#ifdef _WIN32
 #if defined(UIBASE_EXPORT)
   #define QDLLEXPORT __declspec(dllexport)
 #elif defined(_NODLL)
@@ -32,6 +33,7 @@ namespace MOBase {
 #else
   #undef DLLEXPORT
   #define QDLLEXPORT __declspec(dllimport)
+#endif
 #endif
 
 } // namespace MOBase

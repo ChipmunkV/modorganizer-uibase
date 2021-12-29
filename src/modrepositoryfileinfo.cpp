@@ -69,3 +69,10 @@ QString MOBase::ModRepositoryFileInfo::toString() const
             .arg(repository)
             .arg(QString(QtJson::serialize(userData)));
 }
+
+MOBase::ModRepositoryFileInfo& MOBase::ModRepositoryFileInfo::operator=(const MOBase::ModRepositoryFileInfo &reference)
+{
+  using Type = MOBase::ModRepositoryFileInfo;
+  ::memcpy(this, static_cast<const void *>(&reference), sizeof(Type)); // hack to put QObject into QList (since it's already used for the python interface)
+  return *this;
+}

@@ -26,8 +26,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include "questionboxmemory.h"
 #include "log.h"
 #include <QComboBox>
+#include <QMainWindow>
 #include <QRadioButton>
-#include <Windows.h>
+//#include <Windows.h>
 
 namespace MOBase
 {
@@ -68,10 +69,10 @@ void reportError(const QString &message)
       criticalOnTop(message);
     }
   } else {
-    ::MessageBoxW(
-      0, message.toStdWString().c_str(),
-      QObject::tr("Error").toStdWString().c_str(),
-      MB_ICONERROR | MB_OK);
+//    ::MessageBoxW(
+//      0, message.toStdWString().c_str(),
+//      QObject::tr("Error").toStdWString().c_str(),
+//      MB_ICONERROR | MB_OK);
   }
 }
 

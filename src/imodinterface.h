@@ -24,12 +24,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <memory>
 #include <utility>
+#include <map>
 #include <set>
 
 #include <QColor>
 #include <QDateTime>
 #include <QString>
 #include <QStringList>
+#include <QVariant>
 
 
 namespace MOBase {

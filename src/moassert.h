@@ -14,15 +14,19 @@ inline void MOAssert(
   {
     log::error("assertion failed: {}:{} {}: '{}'", file, line, func, exp);
 
-    if (IsDebuggerPresent()) {
-      DebugBreak();
-    }
+//    if (IsDebuggerPresent()) {
+//      DebugBreak();
+//    }
+    assert(false && "Not implemented");
   }
 }
 
 } // namespace
 
-
+#ifdef _WIN32
 #define MO_ASSERT(v) MOAssert(v, #v, __FILE__, __LINE__, __FUNCSIG__)
+#else
+#define MO_ASSERT(v) MOAssert(v, #v, __FILE__, __LINE__, __PRETTY_FUNCTION__)
+#endif
 
 #endif // UIBASE_MOASSERT_INCLUDED

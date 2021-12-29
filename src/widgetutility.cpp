@@ -3,6 +3,8 @@
 #include "log.h"
 #include <QHeaderView>
 #include <QCheckBox>
+#include <QMenu>
+#include <QTreeView>
 #include <QWidgetAction>
 
 namespace MOBase

@@ -1,7 +1,12 @@
 #include "filterwidget.h"
 #include "eventfilter.h"
 #include "log.h"
+#include <QApplication>
+#include <QContextMenuEvent>
+#include <QDialog>
+#include <QMenu>
 #include <QSortFilterProxyModel>
+#include <QTimer>
 #include <QEvent>
 
 namespace MOBase {

@@ -53,29 +53,30 @@ quint32 TaskProgressManager::getId()
 
 void TaskProgressManager::showProgress()
 {
-  if (!m_Percentages.empty()) {
-    m_Taskbar->SetProgressState(m_WinId, TBPF_NORMAL);
-
-    QTime now = QTime::currentTime();
-    unsigned long long total = 0;
-    unsigned long long count = 0;
-
-    for (auto iter = m_Percentages.begin(); iter != m_Percentages.end();) {
-      if (iter->second.first.secsTo(now) < 15) {
-        total += static_cast<unsigned long long>(iter->second.second);
-        ++iter;
-        ++count;
-      } else {
-        // if there was no progress in 15 seconds remove this progress
-        log::debug("no progress in 15 seconds ({})", iter->second.first.secsTo(now));
-        iter = m_Percentages.erase(iter);
-      }
-    }
-
-    m_Taskbar->SetProgressValue(m_WinId, total, count * 100);
-  } else {
-    m_Taskbar->SetProgressState(m_WinId, TBPF_NOPROGRESS);
-  }
+//  if (!m_Percentages.empty()) {
+//    m_Taskbar->SetProgressState(m_WinId, TBPF_NORMAL);
+//
+//    QTime now = QTime::currentTime();
+//    unsigned long long total = 0;
+//    unsigned long long count = 0;
+//
+//    for (auto iter = m_Percentages.begin(); iter != m_Percentages.end();) {
+//      if (iter->second.first.secsTo(now) < 15) {
+//        total += static_cast<unsigned long long>(iter->second.second);
+//        ++iter;
+//        ++count;
+//      } else {
+//        // if there was no progress in 15 seconds remove this progress
+//        log::debug("no progress in 15 seconds ({})", iter->second.first.secsTo(now));
+//        iter = m_Percentages.erase(iter);
+//      }
+//    }
+//
+//    m_Taskbar->SetProgressValue(m_WinId, total, count * 100);
+//  } else {
+//    m_Taskbar->SetProgressState(m_WinId, TBPF_NOPROGRESS);
+//  }
+  assert(false && "Not implemented");
 }
 
 
@@ -91,11 +92,12 @@ bool TaskProgressManager::tryCreateTaskbar()
 
   HRESULT result = 0;
   if (m_WinId != nullptr) {
-    result = CoCreateInstance(CLSID_TaskbarList, 0, CLSCTX_INPROC_SERVER,
-                              IID_PPV_ARGS(&m_Taskbar));
-    if (result == S_OK) {
-      return true;
-    }
+//    result = CoCreateInstance(CLSID_TaskbarList, 0, CLSCTX_INPROC_SERVER,
+//                              IID_PPV_ARGS(&m_Taskbar));
+//    if (result == S_OK) {
+//      return true;
+//    }
+    assert(false && "Not implemented");
   }
 
   // if we got here we got no connection to the taskbar
