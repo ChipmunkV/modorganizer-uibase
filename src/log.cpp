@@ -15,6 +15,7 @@ namespace spdlog { using wstring_view_t = fmt::basic_string_view<wchar_t>; }
 #include <spdlog/sinks/daily_file_sink.h>
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/sinks/basic_file_sink.h>
+#include <spdlog/spdlog.h>
 #pragma warning(pop)
 
 
@@ -328,21 +329,27 @@ void Logger::createLogger(const std::string& name)
 {
   m_sinks.reset(new spdlog::sinks::dist_sink<std::mutex>);
 
-//  DWORD console_mode;
-//  if (::GetConsoleMode(::GetStdHandle(STD_ERROR_HANDLE), &console_mode) != 0) {
-//      using sink_type = spdlog::sinks::wincolor_stderr_sink_mt;
-//      m_console.reset(new sink_type);
-//
-//      if (auto* cs = dynamic_cast<sink_type*>(m_console.get())) {
-//          cs->set_color(spdlog::level::info, cs->WHITE);
-//          cs->set_color(spdlog::level::debug, cs->WHITE);
-//      }
-//
-//      addSink(m_console);
-//  }
-  assert(false && "Not implemented");
+#ifdef _WIN32
+  DWORD console_mode;
+  if (::GetConsoleMode(::GetStdHandle(STD_ERROR_HANDLE), &console_mode) != 0) {
+      using sink_type = spdlog::sinks::wincolor_stderr_sink_mt;
+      m_console.reset(new sink_type);
+
+      if (auto* cs = dynamic_cast<sink_type*>(m_console.get())) {
+          cs->set_color(spdlog::level::info, cs->WHITE);
+          cs->set_color(spdlog::level::debug, cs->WHITE);
+      }
+
+      addSink(m_console);
+  }
+#else
+  using sink_type = spdlog::sinks::ansicolor_stderr_sink_mt;
+  m_console.reset(new sink_type);
+  addSink(m_console);
+#endif
 
   m_logger.reset(new spdlog::logger(name, m_sinks));
+  std::cerr << "FIXME: create logger" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n";
 }
 
 void Logger::addSink(std::shared_ptr<spdlog::sinks::sink> sink)

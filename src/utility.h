@@ -21,6 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #ifndef MO_UIBASE_UTILITY_INCLUDED
 #define MO_UIBASE_UTILITY_INCLUDED
 
+#include <iostream> // UNUSED
 #include <vector>
 #include <set>
 #include <algorithm>
@@ -655,7 +656,7 @@ bool forEachLineInFile(const QString& filePath, F&& f)
 //    }
 //  }
 
-  assert(false && "Not implemented");
+  std::cerr << "FIXME: forEachLineInFile, filePath: '" + filePath.toStdString() + "'" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n";
   return true;
 }
 

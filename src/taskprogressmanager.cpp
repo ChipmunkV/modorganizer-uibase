@@ -97,7 +97,7 @@ bool TaskProgressManager::tryCreateTaskbar()
 //    if (result == S_OK) {
 //      return true;
 //    }
-    assert(false && "Not implemented");
+    std::cerr << "FIXME: tryCreateTaskbar" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n";
   }
 
   // if we got here we got no connection to the taskbar

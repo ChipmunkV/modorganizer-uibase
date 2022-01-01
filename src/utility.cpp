@@ -236,8 +236,8 @@ bool shellCopy(const QStringList &sourceNames, const QStringList &destinationNam
 bool shellCopy(const QString &sourceNames, const QString &destinationNames, bool yesToAll, QWidget *dialog)
 {
 //  return shellOp(QStringList() << sourceNames, QStringList() << destinationNames, dialog, FO_COPY, yesToAll);
-  assert(false && "Not implemented");
-  return false;
+  std::cerr << "FIXME: shellCopy, sourceNames: '" + sourceNames.toStdString() + "', destinationNames: '" + destinationNames.toStdString() + "', yesToAll: '" + (yesToAll ? "true" : "false") + "'" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n";
+  return true;
 }
 
 bool shellMove(const QStringList &sourceNames, const QStringList &destinationNames, QWidget *dialog)
@@ -903,7 +903,7 @@ void removeOldFiles(const QString &path, const QString &pattern, int numToKeep, 
 //      log::warn("failed to remove log files: {}", formatSystemMessage(e));
 //    }
 //  }
-  assert(false && "Not implemented");
+  std::cerr << "FIXME: removeOldFiles, path: '" + path.toStdString() + "', pattern: '" + pattern.toStdString() + "', numToKeep: '" + std::to_string(numToKeep) + "'" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n";
 }
 
 
@@ -918,7 +918,7 @@ QIcon iconForExecutable(const QString &filePath)
 //  } else {
 //    return QIcon(":/MO/gui/executable");
 //  }
-  assert(false && "Not implemented");
+  std::cerr << "FIXME: extracting iconForExecutable from '" + filePath.toStdString() + "'" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n";
   return QIcon(":/MO/gui/executable");
 }
 
@@ -987,7 +987,7 @@ QString getProductVersion(QString const& filepath) {
 //  }
 //
 //  return QString::fromWCharArray((LPCWSTR)lpb);
-    assert(false && "Not implemented");
+    std::cerr << "FIXME: getProductVersion" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n";
     return "";
 }
 
