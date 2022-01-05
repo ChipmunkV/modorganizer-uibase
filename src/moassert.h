@@ -17,7 +17,7 @@ inline void MOAssert(
 //    if (IsDebuggerPresent()) {
 //      DebugBreak();
 //    }
-    assert(false && "Not implemented");
+    std::cerr << "FIXME: Not implemented" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n"; assert(false && "Not implemented");
   }
 }
 

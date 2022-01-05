@@ -75,7 +75,7 @@ bool removeDir(const QString &dirName)
 //    reportError(QObject::tr("\"%1\" doesn't exist (remove)").arg(dirName));
 //    return false;
 //  }
-  assert(false && "Not implemented");
+  std::cerr << "FIXME: Not implemented" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n"; assert(false && "Not implemented");
 
   return true;
 }
@@ -115,7 +115,7 @@ bool copyDir(const QString &sourceName, const QString &destinationName, bool mer
 
 static DWORD TranslateError(int error)
 {
-  assert(false && "Not implemented");
+  std::cerr << "FIXME: Not implemented" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n"; assert(false && "Not implemented");
   switch (error) {
 //    case 0x71:    return ERROR_INVALID_PARAMETER; // same file
 //    case 0x72:    return ERROR_INVALID_PARAMETER; // many source, one destination. shouldn't happen due to how parameters are transformed
@@ -222,42 +222,45 @@ static bool shellOp(
 //    ::SetLastError(TranslateError(res));
 //    return false;
 //  }
-    assert(false && "Not implemented");
+    std::cerr << "FIXME: Not implemented" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n"; assert(false && "Not implemented");
     return false;
 }
 
 bool shellCopy(const QStringList &sourceNames, const QStringList &destinationNames, QWidget *dialog)
 {
 //  return shellOp(sourceNames, destinationNames, dialog, FO_COPY, false);
-  assert(false && "Not implemented");
+  std::cerr << "FIXME: Not implemented" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n"; assert(false && "Not implemented");
   return false;
 }
 
 bool shellCopy(const QString &sourceNames, const QString &destinationNames, bool yesToAll, QWidget *dialog)
 {
-//  return shellOp(QStringList() << sourceNames, QStringList() << destinationNames, dialog, FO_COPY, yesToAll);
-  std::cerr << "FIXME: shellCopy, sourceNames: '" + sourceNames.toStdString() + "', destinationNames: '" + destinationNames.toStdString() + "', yesToAll: '" + (yesToAll ? "true" : "false") + "'" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n";
-  return true;
+#ifdef _WIN32
+  return shellOp(QStringList() << sourceNames, QStringList() << destinationNames, dialog, FO_COPY, yesToAll);
+#else
+  std::cerr << "FIXME: shellCopy confirmation, sourceNames: '" + sourceNames.toStdString() + "', destinationNames: '" + destinationNames.toStdString() + "', yesToAll: '" + (yesToAll ? "true" : "false") + "'" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n";
+  return QFile::copy(sourceNames, destinationNames);
+#endif
 }
 
 bool shellMove(const QStringList &sourceNames, const QStringList &destinationNames, QWidget *dialog)
 {
 //  return shellOp(sourceNames, destinationNames, dialog, FO_MOVE, false);
-  assert(false && "Not implemented");
+  std::cerr << "FIXME: Not implemented" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n"; assert(false && "Not implemented");
   return false;
 }
 
 bool shellMove(const QString &sourceNames, const QString &destinationNames, bool yesToAll, QWidget *dialog)
 {
 //  return shellOp(QStringList() << sourceNames, QStringList() << destinationNames, dialog, FO_MOVE, yesToAll);
-  assert(false && "Not implemented");
+  std::cerr << "FIXME: Not implemented" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n"; assert(false && "Not implemented");
   return false;
 }
 
 bool shellRename(const QString &oldName, const QString &newName, bool yesToAll, QWidget *dialog)
 {
 //  return shellOp(QStringList(oldName), QStringList(newName), dialog, FO_RENAME, yesToAll);
-  assert(false && "Not implemented");
+  std::cerr << "FIXME: Not implemented" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n"; assert(false && "Not implemented");
   return false;
 }
 
@@ -265,8 +268,8 @@ bool shellDelete(const QStringList &fileNames, bool recycle, QWidget *dialog)
 {
 //  const UINT op = static_cast<UINT>(recycle ? FO_RECYCLE : FO_DELETE);
 //  return shellOp(fileNames, QStringList(), dialog, op, false);
-  assert(false && "Not implemented");
-  return false;
+  std::cerr << "FIXME: shellDelete, fileNames: '" + fileNames.join(", ").toStdString() + "', recycle: '" + (recycle ? "true" : "false") + "'" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n";
+  return true;
 }
 
 
@@ -292,9 +295,11 @@ Result Result::makeFailure(DWORD error, QString message)
 
 Result Result::makeSuccess(HANDLE process)
 {
-//  return Result(true, ERROR_SUCCESS, {}, process);
-  assert(false && "Not implemented");
+#ifdef _WIN32
+  return Result(true, ERROR_SUCCESS, {}, process);
+#else
   return Result(true, 0, {}, process);
+#endif
 }
 
 bool Result::success() const
@@ -435,7 +440,8 @@ Result ShellExecuteWrapper(
 //
 //  const HANDLE process = info.hProcess ? info.hProcess : INVALID_HANDLE_VALUE;
 //  return Result::makeSuccess(process);
-  assert(false && "Not implemented");
+  std::wcerr << std::wstring(L"FIXME: ShellExecuteWrapper, operation: '") + (operation ? operation : L"") + L"', file: '" + (file ? file : L"") + L"', params: '" + (params ? params : L"") + L"'";
+  std::cerr << std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n";
   return Result::makeSuccess();
 }
 
@@ -473,7 +479,7 @@ Result Explore(const QFileInfo& info)
 //      return Result::makeFailure(ERROR_FILE_NOT_FOUND);
 //    }
 //  }
-  assert(false && "Not implemented");
+  std::cerr << "FIXME: Not implemented" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n"; assert(false && "Not implemented");
   return Result::makeSuccess();
 }
 
@@ -555,7 +561,7 @@ Result OpenCustomURL(const std::wstring& format, const std::wstring& url)
 //  ::CloseHandle(pi.hProcess);
 //  ::CloseHandle(pi.hThread);
 
-  assert(false && "Not implemented");
+  std::cerr << "FIXME: Not implemented" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n"; assert(false && "Not implemented");
   return Result::makeSuccess();
 }
 
@@ -604,7 +610,7 @@ Result Delete(const QFileInfo& path)
 //    return Result::makeFailure(e);
 //  }
 
-  assert(false && "Not implemented");
+  std::cerr << "FIXME: Not implemented" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n"; assert(false && "Not implemented");
   return Result::makeSuccess();
 }
 
@@ -629,7 +635,7 @@ Result Rename(const QFileInfo& src, const QFileInfo& dest, bool copyAllowed)
 //    return Result::makeFailure(e);
 //  }
 
-  assert(false && "Not implemented");
+  std::cerr << "FIXME: Not implemented" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n"; assert(false && "Not implemented");
   return Result::makeSuccess();
 }
 
@@ -643,7 +649,7 @@ Result CreateDirectories(const QDir& dir)
 //      e, QString::fromStdWString(formatSystemMessage(e)));
 //  }
 
-  assert(false && "Not implemented");
+  std::cerr << "FIXME: Not implemented" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n"; assert(false && "Not implemented");
   return Result::makeSuccess();
 }
 
@@ -656,7 +662,7 @@ Result DeleteDirectoryRecursive(const QDir& dir)
 //      e, QString::fromStdWString(formatSystemMessage(e)));
 //  }
 
-  assert(false && "Not implemented");
+  std::cerr << "FIXME: Not implemented" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n"; assert(false && "Not implemented");
   return Result::makeSuccess();
 }
 
@@ -787,7 +793,7 @@ struct CoTaskMemFreer
   void operator()(void* p)
   {
 //    ::CoTaskMemFree(p);
-    assert(false && "Not implemented");
+    std::cerr << "FIXME: Not implemented" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n"; assert(false && "Not implemented");
   }
 };
 
@@ -839,14 +845,14 @@ using COMMemPtr = std::unique_ptr<T, CoTaskMemFreer>;
 QString getDesktopDirectory()
 {
 //  return getKnownFolder(FOLDERID_Desktop, "desktop").absolutePath();
-  assert(false && "Not implemented");
+  std::cerr << "FIXME: getDesktopDirectory" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n";
   return "";
 }
 
 QString getStartMenuDirectory()
 {
 //  return getKnownFolder(FOLDERID_StartMenu, "start menu").absolutePath();
-    assert(false && "Not implemented");
+    std::cerr << "FIXME: Not implemented" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n"; assert(false && "Not implemented");
     return "";
 }
 
@@ -950,7 +956,7 @@ QString getFileVersion(QString const& filepath)
 //    .arg(LOWORD(pFileInfo->dwFileVersionMS))
 //    .arg(HIWORD(pFileInfo->dwFileVersionLS))
 //    .arg(LOWORD(pFileInfo->dwFileVersionLS));
-    assert(false && "Not implemented");
+    std::cerr << "FIXME: Not implemented" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n"; assert(false && "Not implemented");
     return "";
 }
 
@@ -1062,7 +1068,7 @@ std::wstring formatMessage(DWORD id, const std::wstring& message)
 std::wstring formatSystemMessage(DWORD id)
 {
 //  return formatMessage(id, getMessage(id, 0));
-  assert(false && "Not implemented");
+  std::cerr << "FIXME: formatSystemMessage, id: '" + std::to_string(id) + "'" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n";
   return L"";
 }
 
@@ -1070,7 +1076,7 @@ std::wstring formatNtMessage(NTSTATUS s)
 {
 //  const DWORD id = static_cast<DWORD>(s);
 //  return formatMessage(id, getMessage(id, ::GetModuleHandleW(L"ntdll.dll")));
-  assert(false && "Not implemented");
+  std::cerr << "FIXME: Not implemented" + std::string(" \e]8;;eclsrc://") + __FILE__ + ":" + std::to_string(__LINE__) + "\a" + __FILE__ + ":" + std::to_string(__LINE__) + "\e]8;;\a\n"; assert(false && "Not implemented");
   return L"";
 }
 
