@@ -59,9 +59,13 @@ QFile *SafeWriteFile::operator->() {
 
 void SafeWriteFile::commit() {
   shellDeleteQuiet(m_FileName);
-  m_TempFile.rename(m_FileName);
+  QString tempFileName = m_TempFile.fileName(); // if fileName() is not called before closing the file, the temporary file may be removed regardless of autoRemove
   m_TempFile.setAutoRemove(false);
-  m_TempFile.close();
+  if (!m_TempFile.rename(m_FileName)) { // file is closed before renaming
+    if (!QFile(tempFileName).rename(m_FileName)) {
+      qCritical("failed to rename to filename %s", qUtf8Printable(m_FileName));
+    }
+  }
 }
 
 bool SafeWriteFile::commitIfDifferent(QByteArray &inHash) {
